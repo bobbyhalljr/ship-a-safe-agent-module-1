@@ -128,28 +128,39 @@ export function formatLog(ctx: Context): string {
   return [...lines, `skills in context: ${[...ctx.loadedSkills].join(", ") || "none"}`].join("\n");
 }
 
-// ===== EXERCISES: make `npm test` pass =====
+// ===== EXERCISES: solutions =====
 
-// Exercise 1: a model for "Where is my package for order 1042?"
-// It should load the shipping skill, call track_package with { id: "1042" },
-// then answer with the tracking result. It must never call a refunds tool.
-export const shippingModel: Model = (ctx) => {
-  void ctx;
-  throw new Error("TODO: exercise 1");
+// Exercise 1
+export const shippingModel: Model = (ctx): Turn => {
+  if (!ctx.loadedSkills.has("shipping")) return { kind: "load_skill", name: "shipping" };
+  const result = ctx.events.find((e) => e.type === "tool_result" && e.name === "track_package");
+  if (!result) return { kind: "call", name: "track_package", args: { id: "1042" } };
+  return { kind: "answer", text: result.type === "tool_result" ? result.result : "" };
 };
 
-// Exercise 2: a tool-call budget.
-// Same as runAgent, but also stop when limits.maxToolCalls tool calls have been made.
-// Stop with the answer: `Stopped: tool call budget of ${maxToolCalls} reached.`
+// Exercise 2
 export type BudgetLimits = Limits & { maxToolCalls: number };
 export function runAgentWithBudget(task: string, model: Model, limits: BudgetLimits): Context {
-  void task; void model; void limits;
-  throw new Error("TODO: exercise 2");
+  const counted: Model = (ctx) => {
+    const calls = ctx.events.filter((e) => e.type === "tool_call").length;
+    const turn = model(ctx);
+    if (turn.kind === "call" && calls >= limits.maxToolCalls)
+      return { kind: "answer", text: `Stopped: tool call budget of ${limits.maxToolCalls} reached.` };
+    return turn;
+  };
+  return runAgent(task, counted, limits);
 }
 
-// Exercise 3: summarize a run from its event log.
+// Exercise 3
 export type Summary = { skills: string[]; toolCalls: number; blocked: string[]; answer: string };
 export function summarize(ctx: Context): Summary {
-  void ctx;
-  throw new Error("TODO: exercise 3");
+  const skills: string[] = [], blocked: string[] = [];
+  let toolCalls = 0, answer = "";
+  for (const e of ctx.events) {
+    if (e.type === "skill_loaded") skills.push(e.name);
+    if (e.type === "tool_call") toolCalls++;
+    if (e.type === "blocked") blocked.push(`${e.name}: ${e.reason}`);
+    if (e.type === "answer") answer = e.text;
+  }
+  return { skills, toolCalls, blocked, answer };
 }
