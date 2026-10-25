@@ -1,0 +1,8 @@
+visible before: none
+visible after:  lookup_order, issue_refund
+
+Skills:
+- refunds: Refund or credit a customer order.
+- shipping: Track or reroute a package.
+
+Full refund within 30 days to the original card. After 30 days, store credit only.

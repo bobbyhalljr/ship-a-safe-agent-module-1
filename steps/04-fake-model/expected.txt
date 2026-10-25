@@ -1,0 +1,2 @@
+turn 1: {"kind":"load_skill","name":"refunds"}
+turn 2: {"kind":"call","name":"lookup_order","args":{"id":"1042"}}

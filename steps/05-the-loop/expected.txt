@@ -1,0 +1,7 @@
+{"type":"user","text":"Customer wants a refund for order 1042."}
+{"type":"skill_loaded","name":"refunds"}
+{"type":"tool_call","name":"lookup_order","args":{"id":"1042"}}
+{"type":"tool_result","name":"lookup_order","result":"order 1042: $48.00, placed 12 days ago"}
+{"type":"tool_call","name":"issue_refund","args":{"id":"1042","amount":"48.00"}}
+{"type":"blocked","name":"issue_refund","reason":"needs approval"}
+{"type":"answer","text":"I need approval before I can issue_refund."}

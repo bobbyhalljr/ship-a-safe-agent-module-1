@@ -2,9 +2,21 @@
   "name": "ship-a-safe-agent-module-1",
   "version": "1.0.0",
   "description": "Free Module 1 of Ship a Safe Agent: one agent loop with a tool registry, allow / ask / deny permissions, skills on demand, a step budget, and an event log. Fake model. No API key.",
-  "main": "agent.ts",
-  "scripts": { "start": "tsx agent.ts", "typecheck": "tsc --noEmit" },
+  "main": "steps/06-event-log/agent.ts",
+  "scripts": {
+    "start": "tsx steps/06-event-log/run.ts",
+    "step": "tsx",
+    "test": "tsx --test test/exercise.test.ts",
+    "check": "tsc --noEmit && tsx --test test/steps.test.ts"
+  },
   "author": "Bobby Hall Jr",
   "license": "MIT",
-  "devDependencies": { "@types/node": "^22.10.0", "tsx": "^4.19.2", "typescript": "^5.7.2" }
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }

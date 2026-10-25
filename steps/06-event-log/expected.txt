@@ -1,0 +1,28 @@
+
+run 1: no approval
+user     Customer wants a refund for order 1042.
+skill    loaded refunds
+call     lookup_order({"id":"1042"})
+result   order 1042: $48.00, placed 12 days ago
+call     issue_refund({"id":"1042","amount":"48.00"})
+BLOCKED  issue_refund: needs approval
+answer   I need approval before I can issue_refund.
+skills in context: refunds
+
+run 2: refund approved
+user     Customer wants a refund for order 1042.
+skill    loaded refunds
+call     lookup_order({"id":"1042"})
+result   order 1042: $48.00, placed 12 days ago
+call     issue_refund({"id":"1042","amount":"48.00"})
+result   refunded $48.00 on order 1042
+answer   Refunded $48.00 on order 1042.
+skills in context: refunds
+
+run 3: step budget 2
+user     Customer wants a refund for order 1042.
+skill    loaded refunds
+call     lookup_order({"id":"1042"})
+result   order 1042: $48.00, placed 12 days ago
+answer   Stopped: step budget of 2 reached.
+skills in context: refunds
