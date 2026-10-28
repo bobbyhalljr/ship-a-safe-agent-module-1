@@ -1,5 +1,19 @@
 # Ship a Safe Agent: Module 1
 
+<!-- course-walkthrough:start -->
+## Video walkthrough
+
+[![Watch Module 1: Build the loop](media/poster.png)](https://bhjr.dev/courses/ship-a-safe-agent/module-1#walkthrough)
+
+**[Watch the full walkthrough on BHJR.dev](https://bhjr.dev/courses/ship-a-safe-agent/module-1#walkthrough)** · 2:41 · Bobby Hall Jr voice narration · English captions
+
+Module 1 and this full walkthrough are free.
+
+[Download the full video](media/walkthrough-1.25x.mp4) · [English captions](media/captions.vtt)
+
+<!-- course-walkthrough:end -->
+
+
 Starter repo for Module 1 of **Ship a Safe Agent**: build a tiny agent loop with a tool registry, allow/ask/deny permissions, skills that load on demand, and an event log you can replay.
 
 Lesson: https://bhjr.dev/courses/ship-a-safe-agent/module-1

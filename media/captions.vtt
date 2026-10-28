@@ -1,0 +1,133 @@
+WEBVTT
+
+00:00:00.175 --> 00:00:03.502
+An agent asks to refund an order. Should that request execute?
+
+00:00:03.536 --> 00:00:08.262
+Before we worry about which model made the request, we need a place where our application can say no.
+
+00:00:08.296 --> 00:00:10.766
+In this module, we build that place from scratch.
+
+00:00:10.788 --> 00:00:14.857
+A small registry, explicit permissions, a bounded loop, and an event log.
+
+00:00:14.891 --> 00:00:19.583
+Everything runs against a scripted model, so you can inspect the behavior without paying for model calls or relying
+
+00:00:19.617 --> 00:00:22.405
+on a lucky response. Start with the tool registry.
+
+00:00:22.439 --> 00:00:26.291
+Each tool has a name, a description, a permission, and a function that runs it.
+
+00:00:26.337 --> 00:00:29.476
+Look at the actual output here. Looking up an order is allowed.
+
+00:00:29.510 --> 00:00:33.284
+Issuing a refund requires approval. Deleting a customer is denied.
+
+00:00:33.318 --> 00:00:36.197
+That policy lives beside the executable tool definition.
+
+00:00:36.219 --> 00:00:40.481
+A description can help the model choose a tool, but a description does not enforce permission.
+
+00:00:40.503 --> 00:00:43.255
+The application still has to check before calling the function.
+
+00:00:43.313 --> 00:00:46.214
+Now compare the same tools before and after approval.
+
+00:00:46.260 --> 00:00:48.912
+The refund moves from needs approval to okay.
+
+00:00:48.934 --> 00:00:52.584
+The denied delete operation stays denied. That distinction matters.
+
+00:00:52.606 --> 00:00:56.335
+A generic approved flag should not silently turn every capability on.
+
+00:00:56.369 --> 00:01:00.607
+This first module uses a simple set of approved tool names to make the control flow visible.
+
+00:01:00.629 --> 00:01:06.024
+It is a teaching step. Module three tightens approval so it covers one exact payload, rather than every possible
+
+00:01:06.092 --> 00:01:09.537
+invocation of a tool. Next, load the refunds skill.
+
+00:01:09.651 --> 00:01:11.940
+Before loading, the visible tool set is empty.
+
+00:01:12.008 --> 00:01:15.374
+After loading, the agent can see the order lookup and refund tools.
+
+00:01:15.408 --> 00:01:18.093
+The skill also brings the refund policy into context.
+
+00:01:18.127 --> 00:01:23.476
+We are separating the capabilities the application has from the capabilities this particular task exposes.
+
+00:01:23.522 --> 00:01:25.856
+Keep the permission check even when tools are hidden.
+
+00:01:25.970 --> 00:01:31.200
+Reducing what the model sees helps keep context focused, but visibility alone is not authorization.
+
+00:01:31.302 --> 00:01:33.789
+The fake model is just a function over context.
+
+00:01:33.811 --> 00:01:37.257
+It can request a skill, propose a tool call, or return an answer.
+
+00:01:37.347 --> 00:01:41.745
+Because its choices are scripted, the test can deliberately reach the refund boundary every time.
+
+00:01:41.767 --> 00:01:44.340
+We do not need to persuade a live model to misbehave.
+
+00:01:44.374 --> 00:01:49.632
+We can ask a narrower question: when this exact proposal arrives, does the loop enforce the rule?
+
+00:01:49.790 --> 00:01:53.427
+Later, a real model can replace the scripted one without taking ownership of that rule.
+
+00:01:53.485 --> 00:01:57.939
+Here are the completed runs. Without approval, the lookup succeeds and the refund is blocked.
+
+00:01:57.973 --> 00:02:02.665
+With approval, the simulated refund runs. With a two step budget, the loop stops early.
+
+00:02:02.869 --> 00:02:07.254
+The event log records the difference instead of asking us to infer it from a friendly final answer.
+
+00:02:07.424 --> 00:02:10.586
+These are local fake tools, not real customer operations.
+
+00:02:10.756 --> 00:02:13.102
+Watch the calls, results, and blocked events.
+
+00:02:13.272 --> 00:02:16.944
+Those events are the evidence that tells us which path the application actually took.
+
+00:02:17.148 --> 00:02:20.276
+Run the finished example, then work through the three exercises.
+
+00:02:20.344 --> 00:02:22.859
+Build a shipping model that only uses the shipping skill.
+
+00:02:22.927 --> 00:02:25.375
+Add a tool call budget alongside the step budget.
+
+00:02:25.545 --> 00:02:27.891
+Finally, summarize a run from its event log.
+
+00:02:27.925 --> 00:02:31.971
+The starter exercise tests are supposed to fail until you implement the missing pieces.
+
+00:02:32.039 --> 00:02:36.799
+The checkpoint for this module is simple: you should be able to point at the exact line that prevents an unapproved
+
+00:02:36.901 --> 00:02:41.014
+tool from running. That is the foundation! Now we can make the boundaries stronger.
