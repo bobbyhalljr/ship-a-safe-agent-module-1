@@ -5,11 +5,11 @@
 
 [![Watch Module 1: Build the loop](media/poster.png)](https://bhjr.dev/courses/ship-a-safe-agent/module-1#walkthrough)
 
-**[Watch the full walkthrough on BHJR.dev](https://bhjr.dev/courses/ship-a-safe-agent/module-1#walkthrough)** · 2:41 · Bobby Hall Jr voice narration · English captions
+**[Watch the full walkthrough on BHJR.dev](https://bhjr.dev/courses/ship-a-safe-agent/module-1#walkthrough)** · 3:09 · Normal speed (1×) · Bobby Hall Jr voice narration · English captions
 
 Module 1 and this full walkthrough are free.
 
-[Download the full video](media/walkthrough-1.25x.mp4) · [English captions](media/captions.vtt)
+[Download the full video](media/walkthrough.mp4) · [English captions](media/captions.vtt)
 
 <!-- course-walkthrough:end -->
 
